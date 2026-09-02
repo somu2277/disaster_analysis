@@ -36,7 +36,7 @@ const MainLayout = ({ children }) => {
             {/* Left Brand Area */}
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-2">
-                <Activity className="w-5 h-5 text-brand shrink-0" />
+                <img src="/logo.jpg" alt="AI Disaster Intelligence" className="w-7 h-7 rounded shrink-0 object-cover" />
                 <div className="flex flex-col leading-tight">
                   <span className="text-[12px] sm:text-[13px] font-semibold tracking-tight text-text-main uppercase">AI Disaster Intelligence</span>
                   <span className="hidden xs:block text-[9px] text-text-muted uppercase tracking-widest">Emergency Analysis Platform</span>
