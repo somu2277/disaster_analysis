@@ -53,7 +53,13 @@ const RecentAnalysisTable = ({ data, onRowClick }) => {
                   <StatusBadge status="COMPLETED" type="default" />
                 </td>
                 <td className="px-5 py-3 text-right">
-                  <button className="text-text-muted group-hover:text-brand transition-colors flex items-center justify-end gap-1.5 ml-auto text-[13px] font-medium">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onRowClick && onRowClick(item, isThermal ? 'thermal' : 'damage');
+                    }}
+                    className="text-text-muted group-hover:text-brand transition-colors flex items-center justify-end gap-1.5 ml-auto text-[13px] font-medium"
+                  >
                     <Eye className="w-4 h-4" /> View
                   </button>
                 </td>

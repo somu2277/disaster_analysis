@@ -6,10 +6,12 @@ import { getDamageHistory } from '../services/damageApi';
 import PageHeader from '../components/ui/PageHeader';
 import StatusBadge from '../components/ui/StatusBadge';
 import { EmptyState, ErrorState } from '../components/ui/StateComponents';
+import HistoryDetailDrawer from '../components/shared/HistoryDetailDrawer';
 
 const History = () => {
   const [activeFilter, setActiveFilter] = useState('all'); // 'all' | 'thermal' | 'damage'
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRecord, setSelectedRecord] = useState(null);
   
   const [thermalHistory, setThermalHistory] = useState([]);
   const [damageHistory, setDamageHistory] = useState([]);
@@ -124,7 +126,11 @@ const History = () => {
               </thead>
               <tbody className="divide-y divide-border-dark">
                 {combinedHistory.map((item) => (
-                  <tr key={item._id} className="hover:bg-brand/5 transition-colors group">
+                  <tr 
+                    key={item._id} 
+                    className="hover:bg-brand/5 transition-colors group cursor-pointer"
+                    onClick={() => setSelectedRecord(item)}
+                  >
                     <td className="px-5 py-4 text-[13px] text-text-sec whitespace-nowrap">
                       {formatDate(item.createdAt)}
                     </td>
@@ -150,7 +156,13 @@ const History = () => {
                       <StatusBadge status="COMPLETED" />
                     </td>
                     <td className="px-5 py-4 text-right">
-                      <button className="text-text-muted hover:text-brand transition-colors inline-flex items-center gap-1.5 text-[13px] font-medium">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedRecord(item);
+                        }}
+                        className="text-text-muted hover:text-brand transition-colors inline-flex items-center gap-1.5 text-[13px] font-medium"
+                      >
                         View <ArrowRight className="w-4 h-4" />
                       </button>
                     </td>
@@ -163,6 +175,13 @@ const History = () => {
             <span>Showing {combinedHistory.length} records</span>
           </div>
         </div>
+      )}
+
+      {selectedRecord && (
+        <HistoryDetailDrawer 
+          item={selectedRecord} 
+          onClose={() => setSelectedRecord(null)} 
+        />
       )}
     </div>
   );
